@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact | Sandarshini</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+body{
+  background:#0f0f0f;
+  color:#fff;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.9);
+  z-index:1000;
+}
+.logo{
+  color:#c1121f;
+  font-size:26px;
+  font-weight:700;
+}
+.nav-links{
+  display:flex;
+}
+.nav-links a{
+  color:#fff;
+  margin-left:25px;
+  text-decoration:none;
+}
+.nav-links a:hover{
+  color:#c1121f;
+}
+.toggle{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* ===== CONTACT ===== */
+.contact{
+  padding:120px 30px 80px;
+  max-width:1200px;
+  margin:auto;
+}
+.contact h1{
+  text-align:center;
+  color:#c1121f;
+  font-size:40px;
+  margin-bottom:10px;
+}
+.contact p.subtitle{
+  text-align:center;
+  opacity:.85;
+  margin-bottom:50px;
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+}
+
+/* Info cards */
+.info{
+  background:#1a1a1a;
+  padding:30px;
+  border-radius:15px;
+}
+.info h3{
+  color:#c1121f;
+  margin-bottom:20px;
+}
+.info-item{
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:18px;
+}
+.info-item i{
+  color:#c1121f;
+  font-size:20px;
+  margin-right:15px;
+  margin-top:3px;
+}
+.info-item span{
+  opacity:.9;
+}
+
+/* Map */
+.map iframe{
+  width:100%;
+  height:100%;
+  min-height:350px;
+  border:0;
+  border-radius:15px;
+}
+
+/* Buttons */
+.contact-buttons{
+  margin-top:20px;
+}
+.contact-buttons a{
+  display:inline-block;
+  margin:8px 10px 0 0;
+  padding:12px 22px;
+  border-radius:30px;
+  background:#c1121f;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+}
+.contact-buttons a.call{
+  background:#444;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#000;
+  padding:15px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .toggle{
+    display:block;
+  }
+  .nav-links{
+    position:absolute;
+    top:65px;
+    right:0;
+    width:100%;
+    background:#000;
+    flex-direction:column;
+    display:none;
+  }
+  .nav-links a{
+    padding:15px;
+    border-top:1px solid #222;
+    margin:0;
+  }
+  .nav-links.show{
+    display:flex;
+  }
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:65px;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #222;
+  z-index:9999;
+}
+
+.bottom-nav a{
+  color:#aaa;
+  text-decoration:none;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.bottom-nav i{
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover{
+  color:#c1121f;
+}
+
+/* Desktop lo hide cheyyali ante */
+@media(min-width:900px){
+  .bottom-nav{
+    display:none;
+  }
+}
+.back-btn{
+  color:#fff;
+  font-size:20px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.back-btn:hover{
+  color:#c1121f;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+  <div class="logo">NEW SANDARSHINI</div>
+  
+
+  <div class="toggle" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="image.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<!-- CONTACT SECTION -->
+<section class="contact">
+  <h1>Contact Us</h1>
+  <p class="subtitle">We’d love to serve you</p>
+
+  <div class="contact-grid">
+
+    <!-- INFO -->
+    <div class="info">
+      <h3>Get in Touch</h3>
+
+      <div class="info-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Sandarshini Restaurant,<br>Hyderabad, Telangana</span>
+      </div>
+
+      <div class="info-item">
+        <i class="fas fa-phone-alt"></i>
+        <span>+91 80962 07080</span>
+      </div>
+
+      <div class="info-item">
+        <i class="fas fa-clock"></i>
+        <span>Open Daily: 11:00 AM – 11:00 PM</span>
+      </div>
+
+      <div class="contact-buttons">
+        <a href="https://wa.me/80962 07080"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="tel:+91 80962 07080" class="call"><i class="fas fa-phone"></i> Call Now</a>
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="map">
+      <!-- Replace with your actual Google Map embed -->
+  <iframe 
+  src="https://www.google.com/maps?q=XGV3+6F5,Kadthal,Telangana&output=embed"
+  width="100%"
+  height="300"
+  style="border:0;"
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+    </div>
+
+  </div>
+</section>
+<nav class="bottom-nav">
+  <a href="index.html" >
+    <i class="fas fa-home"></i>
+    <span>Home</span>
+  </a>
+
+  <a href="about.html">
+    <i class="fas fa-info-circle"></i>
+    <span>About</span>
+  </a>
+
+  <a href="menu.html">
+    <i class="fas fa-utensils"></i>
+    <span>Menu</span>
+  </a>
+
+  <a href="game.html">
+    <i class="fas fa-gamepad"></i>
+    <span>Game</span>
+  </a>
+
+  <a href="contact.html" class="active">
+    <i class="fas fa-phone"></i>
+    <span>Contact</span>
+  </a>
+</nav>
+<footer>
+  © 2025 Sandarshini Restaurant | All Rights Reserved
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("show");
+}
+</script>
+
+</body>
+</html>

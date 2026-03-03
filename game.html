@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sandarshini Fun Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{
+  background:#0f0f0f;
+  color:#fff;
+  text-align:center;
+  padding-bottom:90px;
+}
+h1,h2{color:#c1121f;margin:20px 0}
+
+/* ===== SECTION OUTLINE GLOW ===== */
+.section{
+  margin:40px 20px;
+  padding:25px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(10px);
+  position:relative;
+}
+.section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  border:2px solid #c1121f;
+  box-shadow:0 0 10px rgba(193,18,31,.8),
+             0 0 22px rgba(193,18,31,.6);
+  pointer-events:none;
+}
+
+/* ===== TIC TAC TOE ===== */
+.board{
+  display:grid;
+  grid-template-columns:repeat(3,95px);
+  gap:12px;
+  justify-content:center;
+  margin:20px auto;
+}
+.cell{
+  width:95px;height:95px;
+  background:rgba(255,255,255,.15);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  cursor:pointer;
+  position:relative;
+}
+.cell::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:14px;
+  border:2px solid rgba(255,255,255,.4);
+  box-shadow:0 0 8px rgba(255,255,255,.4);
+}
+.cell:hover{transform:scale(1.05)}
+#status{margin:10px;font-weight:600}
+
+/* ===== BUTTON ===== */
+.game-btn{
+  padding:10px 26px;
+  background:transparent;
+  color:#fff;
+  border:2px solid #c1121f;
+  border-radius:25px;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(193,18,31,.7);
+}
+.game-btn:hover{background:#c1121f}
+
+/* ===== FOOD CATCH ===== */
+#gameArea{
+  position:relative;
+  width:100%;
+  max-width:360px;
+  height:420px;
+  margin:20px auto;
+  background:rgba(255,255,255,.12);
+  border-radius:18px;
+}
+#gameArea::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  border:2px solid #c1121f;
+  box-shadow:0 0 12px rgba(193,18,31,.8);
+}
+#basket{
+  position:absolute;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:150px;height:40px;
+  background:#c1121f;
+  border-radius:12px;
+}
+.food{position:absolute;top:0;font-size:30px}
+.score{margin-top:10px;font-size:18px}
+
+/* ===== MEMORY GAME ===== */
+.memory-grid{
+  display:grid;
+  grid-template-columns:repeat(4,70px);
+  gap:12px;
+  justify-content:center;
+  margin-top:20px;
+}
+.memory-card{
+  width:70px;height:70px;
+  background:rgba(255,255,255,.15);
+  border-radius:12px;
+  font-size:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  position:relative;
+}
+.memory-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  border:2px solid rgba(255,255,255,.4);
+  box-shadow:0 0 8px rgba(255,255,255,.4);
+}
+.memory-card.flipped{background:#c1121f}
+.memory-card.matched{background:#2ecc71}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;left:0;
+  width:100%;
+  height:65px;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+.bottom-nav a{
+  color:#aaa;
+  text-decoration:none;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.bottom-nav a.active,
+.bottom-nav a:hover{color:#c1121f}
+.bottom-nav i{font-size:20px}
+/* ===== BACK BUTTON ===== */
+.back-btn{
+  position:fixed;
+  top:15px;
+  left:15px;
+  width:42px;
+  height:42px;
+  background:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:1000;
+  box-shadow:0 0 10px rgba(193,18,31,.8);
+}
+.back-btn i{
+  color:#c1121f;
+  font-size:18px;
+}
+.back-btn:hover{
+  background:#c1121f;
+}
+.back-btn:hover i{
+  color:#fff;
+}
+
+</style>
+</head>
+
+
+<body>
+  <!-- BACK BUTTON -->
+<div class="back-btn" onclick="history.back()">
+  <i class="fas fa-arrow-left"></i>
+</div>
+
+
+<h1>🎮 Fun Zone</h1>
+
+<!-- TIC TAC TOE -->
+<div class="section">
+  <h2>Tic Tac Toe</h2>
+  <div class="board" id="board"></div>
+  <div id="status"></div>
+  <button class="game-btn" onclick="resetTTT()">Restart</button>
+</div>
+
+<!-- FOOD CATCH -->
+<div class="section">
+  <h2>Food Catch 🍔</h2>
+  <div id="gameArea">
+    <div id="basket">🌪️</div>
+  </div>
+  <div class="score">Score: <span id="score">0</span></div>
+</div>
+
+<!-- MEMORY GAME -->
+<div class="section">
+  <h2>Food Memory 🧠</h2>
+  <div class="memory-grid" id="memoryGrid"></div>
+  <button class="game-btn" onclick="initMemory()">Restart</button>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+<a href="about.html" ><i class="fas fa-info-circle"></i><span>About</span></a>
+  <a href="menu.html"><i class="fas fa-utensils"></i><span>Menu</span></a>
+  <a href="game.html" class="active"><i class="fas fa-gamepad"></i><span>Game</span></a>
+  <a href="contact.html"><i class="fas fa-phone"></i><span>Contact</span></a>
+</nav>
+
+<script>
+/* ===== TIC TAC TOE ===== */
+const boardEl=document.getElementById("board");
+const statusEl=document.getElementById("status");
+let cells=Array(9).fill("");
+let current="X";
+
+function drawBoard(){
+  boardEl.innerHTML="";
+  cells.forEach((v,i)=>{
+    const c=document.createElement("div");
+    c.className="cell";
+    c.innerText=v;
+    c.onclick=()=>move(i);
+    boardEl.appendChild(c);
+  });
+}
+function move(i){
+  if(cells[i]||win())return;
+  cells[i]=current;
+  if(win()) statusEl.innerText=current+" Wins 🎉";
+  else if(cells.every(c=>c)) statusEl.innerText="Draw 😐";
+  else current=current==="X"?"O":"X";
+  drawBoard();
+}
+function win(){
+  const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return w.some(a=>a.every(i=>cells[i]===current));
+}
+function resetTTT(){
+  cells=Array(9).fill("");
+  current="X";statusEl.innerText="";
+  drawBoard();
+}
+drawBoard();
+
+/* ===== FOOD CATCH ===== */
+const area=document.getElementById("gameArea");
+const basket=document.getElementById("basket");
+let score=0;
+
+area.addEventListener("mousemove",e=>{
+  basket.style.left=(e.offsetX-45)+"px";
+});
+area.addEventListener("touchmove",e=>{
+  const r=area.getBoundingClientRect();
+  basket.style.left=(e.touches[0].clientX-r.left-45)+"px";
+});
+function dropFood(){
+  const food=document.createElement("div");
+  food.className="food";
+  food.innerText=["🍔","🍕","🍟","🥪"][Math.floor(Math.random()*4)];
+  food.style.left=Math.random()*300+"px";
+  area.appendChild(food);
+  let y=0;
+  const fall=setInterval(()=>{
+    y+=4; food.style.top=y+"px";
+    const f=food.getBoundingClientRect();
+    const b=basket.getBoundingClientRect();
+    if(f.bottom>=b.top && f.left<b.right && f.right>b.left){
+      score++;document.getElementById("score").innerText=score;
+      food.remove();clearInterval(fall);
+    }
+    if(y>420){food.remove();clearInterval(fall);}
+  },30);
+}
+setInterval(dropFood,1200);
+
+/* ===== MEMORY GAME ===== */
+const emojis=["🍔","🍔","🍕","🍕","🍟","🍟","🥪","🥪","🎂","🎂","🍧","🍧"];
+let first=null, lock=false;
+
+function initMemory(){
+  const grid=document.getElementById("memoryGrid");
+  grid.innerHTML="";
+  first=null;lock=false;
+  emojis.sort(()=>Math.random()-0.5);
+  emojis.forEach(e=>{
+    const card=document.createElement("div");
+    card.className="memory-card";
+    card.innerText="";
+    card.dataset.val=e;
+    card.onclick=()=>flip(card);
+    grid.appendChild(card);
+  });
+}
+function flip(card){
+  if(lock||card.classList.contains("matched"))return;
+  card.innerText=card.dataset.val;
+  card.classList.add("flipped");
+  if(!first){first=card;return;}
+  lock=true;
+  if(first.dataset.val===card.dataset.val){
+    first.classList.add("matched");
+    card.classList.add("matched");
+    first=null;lock=false;
+  }else{
+    setTimeout(()=>{
+      first.innerText="";card.innerText="";
+      first.classList.remove("flipped");
+      card.classList.remove("flipped");
+      first=null;lock=false;
+    },700);
+  }
+}
+initMemory();
+</script>
+
+</body>
+</html>

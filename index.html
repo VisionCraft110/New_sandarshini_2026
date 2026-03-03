@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>sandarshini</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+body{
+  background:#0f0f0f;
+  color:#fff;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.9);
+  z-index:1000;
+}
+.logo{
+  color:#c1121f;
+  font-size:26px;
+  font-weight:700;
+}
+.nav-links{
+  display:flex;
+}
+.nav-links a{
+  color:#fff;
+  margin-left:25px;
+  text-decoration:none;
+}
+.nav-links a:hover{ color:#c1121f; }
+.toggle{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* ===== HERO SLIDER ===== */
+.hero{
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+
+.slides{
+  display:flex;
+  height:100%;
+  width:400%;   /* 4 slides × 100 */
+  transition: transform 1s ease-in-out;
+}
+
+.slide{
+  width:100%;   /* IMPORTANT */
+  height:100%;
+  flex-shrink:0;
+  position:relative;
+}
+
+.slide img{
+  width:40%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* DARK OVERLAY */
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+}
+
+/* HERO CONTENT */
+.hero-content{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  z-index:2;
+}
+.hero-content h2{
+  font-size:46px;
+  color:#c1121f;
+}
+.hero-content p{
+  margin:15px 0;
+}
+.btn{
+  display:inline-block;
+  padding:12px 30px;
+  margin:10px;
+  background:#c1121f;
+  color:#fff;
+  text-decoration:none;
+  border-radius:30px;
+}
+.btn.outline{
+  background:transparent;
+  border:2px solid #c1121f;
+}
+
+/* ===== SPECIALS ===== */
+.specials{
+  padding:80px 30px;
+  text-align:center;
+}
+.specials h2{
+  color:#c1121f;
+  margin-bottom:40px;
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+.card{
+  background:#1a1a1a;
+  border-radius:15px;
+  overflow:hidden;
+}
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+.card h3{
+  color:#c1121f;
+  margin:15px 0 5px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#000;
+  padding:15px;
+  text-align:center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .toggle{ display:block; }
+  .nav-links{
+    position:absolute;
+    top:65px;
+    right:0;
+    width:100%;
+    background:#000;
+    flex-direction:column;
+    display:none;
+  }
+  .nav-links a{
+    padding:15px;
+    border-top:1px solid #222;
+    margin:0;
+  }
+  .nav-links.show{ display:flex; }
+  .hero-content h2{ font-size:34px; }
+}
+.video-hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+.video-hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.video-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+}
+.hero-text{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  z-index:2;
+}
+.hero-text h1{
+  font-size:48px;
+  color:#c1121f;
+}
+.hero-text p{
+  margin:15px 0;
+  font-size:18px;
+}
+.hero-btn{
+  padding:14px 34px;
+  background:#c1121f;
+  color:#fff;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+@media(max-width:768px){
+  .hero-text h1{font-size:34px;}
+}
+.user-reviews{
+  padding:80px 20px;
+  background:#111;
+  text-align:center;
+}
+.user-reviews h2{
+  color:#c1121f;
+  margin-bottom:30px;
+}
+
+/* Form */
+.review-form{
+  max-width:500px;
+  margin:0 auto 40px;
+  background:#1a1a1a;
+  padding:25px;
+  border-radius:16px;
+}
+.review-form input,
+.review-form textarea,
+.review-form select{
+  width:100%;
+  padding:10px;
+  margin-bottom:12px;
+  border:none;
+  border-radius:8px;
+  outline:none;
+}
+.review-form textarea{
+  resize:none;
+  height:80px;
+}
+.review-form button{
+  width:100%;
+  padding:12px;
+  background:#c1121f;
+  color:#fff;
+  border:none;
+  border-radius:25px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+/* Reviews */
+.review-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
+}
+.review{
+  background:#1a1a1a;
+  padding:20px;
+  border-radius:16px;
+  text-align:left;
+}
+.review .stars{
+  color:#f5c518;
+  font-size:16px;
+}
+.review .name{
+  margin-top:8px;
+  font-weight:600;
+}
+.review .text{
+  font-size:14px;
+  margin-top:6px;
+  opacity:.9;
+}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:65px;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #222;
+  z-index:9999;
+}
+
+.bottom-nav a{
+  color:#aaa;
+  text-decoration:none;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.bottom-nav i{
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover{
+  color:#c1121f;
+}
+
+/* Desktop lo hide cheyyali ante */
+@media(min-width:900px){
+  .bottom-nav{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">NEW SANDARSHINI</div>
+  <div class="toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="image.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="slides" id="slides">
+    <div class="slide">
+      <img src="4.jpg" alt="Slide 1">
+    </div>
+    <div class="slide">
+      <img src="5.jpg" alt="Slide 2">
+    </div>
+    <div class="slide">
+      <img src="6.jpg" alt="Slide 3">
+    </div>
+<div class="slide">
+      <img src="7.jpg" alt="Slide 4">
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div>
+      <h2>Experience The Royal Taste</h2>
+      <p>Authentic flavors • Premium dining</p>
+      <a href="menu.html" class="btn">View Menu</a>
+      <a href="https://wa.me/919573299396" class="btn outline">Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+<section class="video-hero">
+  <video autoplay muted loop playsinline>
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+
+  <div class="video-overlay"></div>
+
+  <div class="hero-text">
+    <h1>Sandarshini Restaurant</h1>
+    <p>Authentic Taste • Royal Experience</p>
+    <a href="menu.html" class="hero-btn">Order Now</a>
+  </div>
+</section>
+<!-- SPECIALS -->
+<section class="specials">
+  <h2>Chef’s Specials</h2>
+  <div class="cards">
+    <div class="card">
+      <img src="biryani.jpg">
+      <h3>Special Biryani</h3>
+    </div>
+    <div class="card">
+      <img src="butter.jpg">
+      <h3>Tandoori Platter</h3>
+    </div>
+  </div>
+</section>
+<section class="user-reviews">
+  <h2>Customer Reviews</h2>
+
+  <!-- Review Form -->
+  <div class="review-form">
+    <input type="text" id="userName" placeholder="Your Name">
+    <textarea id="userReview" placeholder="Write your review..."></textarea>
+    <select id="userRating">
+      <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+      <option value="4">⭐⭐⭐⭐ Good</option>
+      <option value="3">⭐⭐⭐ Average</option>
+    </select>
+    <button onclick="addReview()">Submit Review</button>
+  </div>
+
+  <!-- Reviews Display -->
+  <div class="review-cards" id="reviewList">
+    <!-- User reviews appear here -->
+  </div>
+<nav class="bottom-nav">
+  <a href="index.html" class="active">
+    <i class="fas fa-home"></i>
+    <span>Home</span>
+  </a>
+
+  <a href="about.html">
+    <i class="fas fa-info-circle"></i>
+    <span>About</span>
+  </a>
+
+  <a href="menu.html">
+    <i class="fas fa-utensils"></i>
+    <span>Menu</span>
+  </a>
+
+  <a href="game.html">
+    <i class="fas fa-gamepad"></i>
+    <span>Game</span>
+  </a>
+
+  <a href="contact.html">
+    <i class="fas fa-phone"></i>
+    <span>Contact</span>
+  </a>
+</nav>
+</section>
+<footer>© 2025 New Sandarshini Restaurant</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("show");
+}
+
+let index = 0;
+const slides = document.getElementById("slides");
+const totalSlides = slides.children.length;
+
+setInterval(() => {
+  index++;
+
+  if(index >= totalSlides){
+    index = 0;
+  }
+
+  slides.style.transform = `translateX(-${index * 100}%)`;
+}, 4000);
+</script>
+<script>
+function addReview(){
+  const name = document.getElementById("userName").value.trim();
+  const text = document.getElementById("userReview").value.trim();
+  const rating = document.getElementById("userRating").value;
+
+  if(name === "" || text === ""){
+    alert("Please enter name and review");
+    return;
+  }
+
+  const newReview = db.push();   // create new id
+
+  newReview.set({
+    name: name,
+    text: text,
+    rating: rating,
+    time: Date.now()
+  });
+
+  alert("Review submitted successfully!");
+
+  // Clear form
+  document.getElementById("userName").value = "";
+  document.getElementById("userReview").value = "";
+  document.getElementById("userRating").value = "5";
+}
+</script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCYgyjIUBCpXCK_md-8fNKSX6-ZJy0TWpI",
+    authDomain: "sandarshini-reviews.firebaseapp.com",
+    databaseURL: "https://sandarshini-reviews-default-rtdb.firebaseio.com",
+    projectId: "sandarshini-reviews",
+    storageBucket: "sandarshini-reviews.firebasestorage.app",
+    messagingSenderId: "165572324750",
+    appId: "1:165572324750:web:945a1a809cafffa4a2c8df",
+    measurementId: "G-550XFWHH7J"  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Reference to database
+  const db = firebase.database().ref("reviews");
+</script>
+<script>
+function loadReviews(){
+  const reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+
+  db.on("child_added", function(snapshot){
+    const data = snapshot.val();
+    let stars = "⭐".repeat(data.rating);
+
+    const reviewDiv = document.createElement("div");
+    reviewDiv.className = "review";
+    reviewDiv.innerHTML = `
+      <div class="stars">${stars}</div>
+      <div class="text">"${data.text}"</div>
+      <div class="name">— ${data.name}</div>
+    `;
+
+    reviewList.prepend(reviewDiv);
+  });
+}
+
+// Load when page opens
+loadReviews();
+</script>
+
+</body>
+</html>
+

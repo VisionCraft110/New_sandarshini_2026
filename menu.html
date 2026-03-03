@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sandarshini | Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0f0f0f;color:#fff;padding-bottom:120px;}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 20px;
+  background:#000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+}
+.logo{
+  color:#c1121f;
+  font-size:22px;
+  font-weight:700;
+}
+.cart-icon{
+  color:#fff;
+  font-size:22px;
+  position:relative;
+  text-decoration:none;
+}
+.cart-count{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  background:#c1121f;
+  color:#fff;
+  font-size:11px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===== MENU ===== */
+.menu{
+  padding:90px 15px 20px;
+  max-width:900px;
+  margin:auto;
+}
+.search{
+  width:100%;
+  padding:12px;
+  border-radius:25px;
+  border:none;
+  outline:none;
+  margin-bottom:25px;
+}
+
+/* CATEGORY */
+.menu-category{
+  background:#141414;
+  padding:20px;
+  border-radius:16px;
+  margin-bottom:30px;
+}
+.menu-category h2{
+  color:#c1121f;
+  margin-bottom:15px;
+  border-bottom:2px solid #c1121f;
+  display:inline-block;
+}
+
+/* ITEM */
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px dashed #333;
+}
+.add-btn{
+  padding:4px 10px;
+  background:#c1121f;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:12px;
+  cursor:pointer;
+}
+.menu-tabs{
+  position:sticky;
+  top:65px; /* top bar height */
+  z-index:999;
+  background:#0f0f0f;
+  padding:10px 0;
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+}
+.menu-tabs button{
+  flex-shrink:0;
+  padding:8px 16px;
+  border:none;
+  border-radius:20px;
+  background:#222;
+  color:#fff;
+  cursor:pointer;
+  font-size:13px;
+}
+.menu-tabs button:hover{
+  background:#c1121f;
+}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:65px;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #222;
+  z-index:9999;
+}
+
+.bottom-nav a{
+  color:#aaa;
+  text-decoration:none;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.bottom-nav i{
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover{
+  color:#c1121f;
+}
+
+/* Desktop lo hide cheyyali ante */
+@media(min-width:900px){
+  .bottom-nav{
+    display:none;
+  }
+}*
+.toast-top{
+  position:fixed;
+  top:-80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:white;
+  color:black;
+  padding:14px 22px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:500;
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+  z-index:99999;
+  transition:all .8s ease;
+}
+
+.toast-top.show{
+  top:20px;
+}
+.back-btn{
+  color:#fff;
+  font-size:20px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.back-btn:hover{
+  color:#c1121f;
+}
+
+</style>
+</head>
+<div id="toast" class="toast-top">
+  <span id="toastText"></span>
+  <a href="cart.html" class="toast-btn">View Cart</a>
+</div>
+
+<audio id="toastSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3" type="audio/mpeg">
+</audio>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px;">
+    
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- Title -->
+    <div class="logo">MENU</div>
+  </div>
+
+  <!-- Cart -->
+  <a href="cart.html" class="cart-icon">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count" id="cartCount">0</span>
+  </a>
+</header>
+
+
+<!-- MENU -->
+<section class="menu">
+
+  <!-- SEARCH -->
+  <input 
+    type="text" 
+    class="search" 
+    id="search"
+    placeholder="Search items..."
+    onkeyup="searchMenu()"
+  >
+<!-- MENU SECTIONS -->
+<div class="menu-tabs">
+  <button onclick="goTo('egg-staters')">egg-Starters</button>
+  <button onclick="goTo('veg-biryani')">Veg Biryani</button>
+<button onclick="goTo('veg-starters')">Veg Starters</button>
+  <button onclick="goTo('nonveg-starters')">Non-Veg Starters</button>
+<button onclick="goTo('sea-food-starters')">seafood-starters</button>
+  <button onclick="goTo('tandoori-kebab')">tandoori-kebab</button>
+  <button
+<button onclick="goTo('veg-main-course')">veg-main-course</button>
+<button onclick="goTo('chicken-egg-curries')">chicken-egg-curries</button>
+<button onclick="goTo('mutton-curries')">mutton-curries</button>
+<button onclick="goTo('fish-prawns-curries')">fish-prawns-curries</button>
+<button onclick="goTo('indian-breads')">Indian-bread</button>
+<button onclick="goTo('salad-papad')">salad-papad</button>
+<button onclick="goTo('veg-fried-rice')">veg-fried-rice</button>
+<button onclick="goTo('nonveg-fried-rice')">nonveg-fried-rice</button>
+  <button onclick="goTo('nonveg-biryani')">Non-Veg Biryani</button>
+  <button onclick="goTo('veg-soups')">Veg Soups</button>
+  <button onclick="goTo('nonveg-soups')">Non-Veg Soups</button>
+  <button onclick="goTo('mandi')">Mandi</button>
+  </div>
+<!-- ================= EGG STARTERS ================= -->
+<div class="menu-category" id="egg-starters">
+  <h2>Egg Starters</h2>
+
+  <div class="item">
+    <span>Chilly Egg</span>
+    <span>₹225
+      <button class="add-btn" onclick="addToCart('Chilly Egg',225)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Egg 65</span>
+    <span>₹225
+      <button class="add-btn" onclick="addToCart('Egg 70',220)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Egg Manchurian</span>
+    <span>₹225 
+      <button class="add-btn" onclick="addToCart('Egg Manchurian',225)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Boiled Egg Fry</span>
+    <span>₹225
+      <button class="add-btn" onclick="addToCart('Boiled Egg Fry',225)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Egg Bhurji</span>
+    <span>₹165 
+      <button class="add-btn" onclick="addToCart('Egg Bhurji',165)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Omelette</span>
+    <span>₹65
+      <button class="add-btn" onclick="addToCart('Omelette',65)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Boiled Egg</span>
+    <span>₹20
+      <button class="add-btn" onclick="addToCart('Boiled Egg',20)">Add</button>
+    </span>
+  </div>
+</div>
+
+
+<!-- ================= NON-VEG STARTERS ================= -->
+<div class="menu-category" id="nonveg-starters">
+  <h2>Non-Veg Starters</h2>
+
+  <div class="item">
+    <span>Chicken 65</span>
+    <span>₹280
+      <button class="add-btn" onclick="addToCart('Chicken 65',280)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chilly Chicken</span>
+    <span>₹280 
+      <button class="add-btn" onclick="addToCart('Chilly Chicken',280)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chilly Chicken (Wet)</span>
+    <span>₹300
+      <button class="add-btn" onclick="addToCart('Chilly Chicken Wet',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Manchurian</span>
+    <span>₹280 
+      <button class="add-btn" onclick="addToCart('Chicken Manchurian',280)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Pepper Chicken</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Pepper Chicken',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Ginger Chicken</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Ginger Chicken',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Dragon Chicken</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Dragon Chicken',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Garlic Chicken</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Garlic Chicken',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Majestic</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Chicken Majestic',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken 555</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Chicken 555',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Crispy Chicken</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Crispy Chicken',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chilly Wings</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Chilly Wings',2300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Chicken (Dry)</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Kaju Chicken Dry',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Drumstick (6 pcs)</span>
+    <span>₹310
+      <button class="add-btn" onclick="addToCart('Chicken Drumstick',310)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Lollipop (6 pcs)</span>
+    <span>₹330 
+      <button class="add-btn" onclick="addToCart('Chicken Lollipop',330)">Add</button>
+    </span>
+  </div>
+</div>
+  
+  <!-- ================= VEG ITEMS ================= -->
+
+<div class="menu-category" id="veg-starters">
+  <h2>Veg Starters</h2>
+  <!-- veg starters items -->
+</div>
+  <div class="item"><span>Veg Manchurian</span><span>₹110 <button class="add-btn" onclick="addToCart('Veg Manchurian',110)">Add</button></span></div>
+  <div class="item"><span>Veg Manchurian (Wet)</span><span>₹110 <button class="add-btn" onclick="addToCart('Veg Manchurian (Wet)',110)">Add</button></span></div>
+  <div class="item"><span>Gobi 65</span><span>₹120 <button class="add-btn" onclick="addToCart('Gobi 65',120)">Add</button></span></div>
+  <div class="item"><span>Gobi Chilly</span><span>₹120 <button class="add-btn" onclick="addToCart('Gobi Chilly',120)">Add</button></span></div>
+  <div class="item"><span>Gobi Manchurian</span><span>₹200 <button class="add-btn" onclick="addToCart('Gobi Manchurian',200)">Add</button></span></div>
+
+  <div class="item"><span>Mushroom 65</span><span>₹230 <button class="add-btn" onclick="addToCart('Mushroom 65',230)">Add</button></span></div>
+  <div class="item"><span>Chilly Mushroom</span><span>₹230 <button class="add-btn" onclick="addToCart('Chilly Mushroom',230)">Add</button></span></div>
+  <div class="item"><span>Mushroom Manchurian</span><span>₹230 <button class="add-btn" onclick="addToCart('Mushroom Manchurian',230)">Add</button></span></div>
+  <div class="item"><span>Pepper Mushroom</span><span>₹230 <button class="add-btn" onclick="addToCart('Pepper Mushroom',230)">Add</button></span></div>
+
+  <div class="item"><span>Baby Corn 65</span><span>₹260 <button class="add-btn" onclick="addToCart('Baby Corn 65',260)">Add</button></span></div>
+  <div class="item"><span>Chilly Baby Corn</span><span>₹260 <button class="add-btn" onclick="addToCart('Chilly Baby Corn',260)">Add</button></span></div>
+  <div class="item"><span>Baby Corn Manchurian</span><span>₹260 <button class="add-btn" onclick="addToCart('Baby Corn Manchurian',260)">Add</button></span></div>
+
+  <div class="item"><span>Crispy Corn</span><span>₹270 <button class="add-btn" onclick="addToCart('Crispy Corn',270)">Add</button></span></div>
+  <div class="item"><span>French Fries</span><span>₹260 <button class="add-btn" onclick="addToCart('French Fries',260)">Add</button></span></div>
+
+  <div class="item"><span>Paneer Manchurian</span><span>₹260 <button class="add-btn" onclick="addToCart('Paneer Manchurian',260)">Add</button></span></div>
+  <div class="item"><span>Paneer 65</span><span>₹260 <button class="add-btn" onclick="addToCart('Paneer 65',260)">Add</button></span></div>
+  <div class="item"><span>Chilly Paneer</span><span>₹190 <button class="add-btn" onclick="addToCart('Chilly Paneer',190)">Add</button></span></div>
+  <div class="item"><span>Paneer Majestic</span><span>₹190 <button class="add-btn" onclick="addToCart('Paneer Majestic',190)">Add</button></span></div>
+  <div class="item"><span>Dragon Paneer</span><span>₹260 <button class="add-btn" onclick="addToCart('Dragon Paneer',260)">Add</button></span></div>
+  <div class="item"><span>Pepper Paneer</span><span>₹260 <button class="add-btn" onclick="addToCart('Pepper Paneer',260)">Add</button></span></div>
+</div>
+<!-- ================= SEA FOOD STARTERS ================= -->
+<div class="menu-category" id="sea-food-starters">
+  <h2>Sea Food Starters</h2>
+
+  <div class="item">
+    <span>Fish Fry (B/L)</span>
+    <span>₹340 
+      <button class="add-btn" onclick="addToCart('Fish Fry (B/L)',340)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Apollo Fish (B/L)</span>
+    <span>₹340 
+      <button class="add-btn" onclick="addToCart('Apollo Fish (B/L)',340)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chilly Fish (B/L)</span>
+    <span>₹340 
+      <button class="add-btn" onclick="addToCart('Chilly Fish (B/L)',340)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Fish Roast (B/L)</span>
+    <span>₹340 
+      <button class="add-btn" onclick="addToCart('Fish Roast (B/L)',340)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Pepper Fish (B/L)</span>
+    <span>₹340 
+      <button class="add-btn" onclick="addToCart('Pepper Fish (B/L)',340)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Loose Prawns</span>
+    <span>₹350 
+      <button class="add-btn" onclick="addToCart('Loose Prawns',350)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chilly Prawns</span>
+    <span>₹350 
+      <button class="add-btn" onclick="addToCart('Chilly Prawns',350)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Pepper Prawns</span>
+    <span>₹350 
+      <button class="add-btn" onclick="addToCart('Pepper Prawns',350)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Prawns Fry</span>
+    <span>₹390 
+      <button class="add-btn" onclick="addToCart('Prawns Fry',390)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Ginger Prawns</span>
+    <span>₹370 
+      <button class="add-btn" onclick="addToCart('Ginger Prawns',370)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Garlic Prawns</span>
+    <span>₹370 
+      <button class="add-btn" onclick="addToCart('Garlic Prawns',370)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Prawns 65</span>
+    <span>₹350 
+      <button class="add-btn" onclick="addToCart('Prawns 65',350)">Add</button>
+    </span>
+  </div>
+</div>
+
+
+<!-- ================= TANDOORI KEBAB ================= -->
+<div class="menu-category" id="tandoori-kebab">
+  <h2>Tandoori Kebab</h2>
+
+  <div class="item">
+    <span>Paneer Tikka (8 pcs)</span>
+    <span>₹280 
+      <button class="add-btn" onclick="addToCart('Paneer Tikka',280)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Paneer Hariyali Tikka (8 pcs)</span>
+    <span>₹280 
+      <button class="add-btn" onclick="addToCart('Paneer Hariyali Tikka',280)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Tandoori Chicken (Full)</span>
+    <span>₹460 
+      <button class="add-btn" onclick="addToCart('Tandoori Chicken Full',460)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Tandoori Chicken (Half)</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Tandoori Chicken Half',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Tikka (With Bone)</span>
+    <span>₹160 
+      <button class="add-btn" onclick="addToCart('Chicken Tikka With Bone',160)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Tangdi Kabab (Full 4 pcs)</span>
+    <span>₹360 
+      <button class="add-btn" onclick="addToCart('Tangdi Kabab Full',360)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Tangdi Kabab (Half 2 pcs)</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Tangdi Kabab Half',210)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Hariyali Tikka (B/L)</span>
+    <span>₹310 
+      <button class="add-btn" onclick="addToCart('Chicken Hariyali Tikka (B/L)',310)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Tikka (B/L)</span>
+    <span>₹310 
+      <button class="add-btn" onclick="addToCart('Chicken Tikka (B/L)',310)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= VEG SOUPS ================= -->
+<div class="menu-category" id="veg-soups">
+  <h2>Veg Soups</h2>
+
+  <div class="item">
+    <span>Veg Corn Soup</span>
+    <span>₹110 
+      <button class="add-btn" onclick="addToCart('Veg Corn Soup',110)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Veg Hot & Sour Soup</span>
+    <span>₹110 
+      <button class="add-btn" onclick="addToCart('Veg Hot & Sour Soup',110)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= VEG MAIN COURSE ================= -->
+<div class="menu-category" id="veg-main-course">
+  <h2>Veg Main Course</h2>
+
+  <div class="item">
+    <span>Mixed Veg Curry</span>
+    <span>₹230 
+      <button class="add-btn" onclick="addToCart('Mixed Veg Curry',230)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Veg Chatpat</span>
+    <span>₹230 
+      <button class="add-btn" onclick="addToCart('Veg Chatpat',230)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Veg</span>
+    <span>₹230 
+      <button class="add-btn" onclick="addToCart('Kadhai Veg',230)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Veg Kolhapuri</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Veg Kolhapuri',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Tomato Curry</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Tomato Curry',210)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Dal Fry</span>
+    <span>₹140 
+      <button class="add-btn" onclick="addToCart('Dal Fry',140)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Dal Tadka</span>
+    <span>₹140 
+      <button class="add-btn" onclick="addToCart('Dal Tadka',140)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Paneer Butter Masala</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Paneer Butter Masala',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Paneer</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Kadhai Paneer',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Paneer Chatpat</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Paneer Chatpat',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Paneer Tikka Masala</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Paneer Tikka Masala',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Paneer</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Kaju Paneer',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Butter Masala</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Kaju Butter Masala',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Tomato Curry</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Kaju Tomato Curry',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Palak Paneer</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Palak Paneer',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Shahi Paneer</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Shahi Paneer',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Plain Palak</span>
+    <span>₹190 
+      <button class="add-btn" onclick="addToCart('Plain Palak',190)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Methi Chaman</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Methi Chaman',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Corn Paneer Curry</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Corn Paneer Curry',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mushroom Paneer</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Mushroom Paneer',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Mushroom</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Kadhai Mushroom',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mushroom Kaju Masala</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Mushroom Kaju Masala',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mushroom Masala</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Mushroom Masala',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mushroom Do Pyaza</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Mushroom Do Pyaza',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Baby Corn Masala</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Baby Corn Masala',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Baby Corn Paneer</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Baby Corn Paneer',250)">Add</button>
+    </span>
+  </div>
+</div>
+
+  <!-- ================= CHICKEN & EGG CURRIES ================= -->
+<div class="menu-category" id="chicken-egg-curries">
+  <h2>Chicken & Egg Curries</h2>
+
+  <div class="item">
+    <span>Chicken Curry</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Chicken Curry',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Chicken</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Kadhai Chicken',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Telangana Chicken Curry</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Telangana Chicken Curry',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Palak Chicken</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Palak Chicken',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Chatpat</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Chicken Chatpat',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Tikka Masala (With Bone)</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Chicken Tikka Masala With Bone',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Do Pyaza</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Chicken Do Pyaza',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Chicken Curry</span>
+    <span>₹280 
+      <button class="add-btn" onclick="addToCart('Kaju Chicken Curry',280)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Hyderabadi</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Chicken Hyderabadi',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Punjabi Chicken</span>
+    <span>₹270 
+      <button class="add-btn" onclick="addToCart('Punjabi Chicken',270)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Natukodi Curry</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Natukodi Curry',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Natukodi Fry</span>
+    <span>₹340 
+      <button class="add-btn" onclick="addToCart('Natukodi Fry',340)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Fry</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Chicken Fry',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Butter Chicken (B/L)</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Butter Chicken (B/L)',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Afghani Chicken (B/L)</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Afghani Chicken (B/L)',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Egg Curry</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Egg Curry',210)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Egg Butter Masala</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Egg Butter Masala',210)">Add</button>
+    </span>
+  </div>
+</div>
+
+
+<!-- ================= MUTTON CURRIES ================= -->
+<div class="menu-category" id="mutton-curries">
+  <h2>Mutton Curries</h2>
+
+  <div class="item">
+    <span>Mutton Curry</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Mutton Curry',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Telangana Mutton</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Telangana Mutton',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Mutton</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Kadhai Mutton',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mutton Butter Masala</span>
+    <span>₹310 
+      <button class="add-btn" onclick="addToCart('Mutton Butter Masala',310)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Palak Mutton</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Palak Mutton',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mutton Fry</span>
+    <span>₹390 
+      <button class="add-btn" onclick="addToCart('Mutton Fry',390)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= FISH & PRAWNS CURRIES ================= -->
+<div class="menu-category" id="fish-prawns-curries">
+  <h2>Fish & Prawns Curries</h2>
+
+  <div class="item">
+    <span>Fish Butter Masala (B/L)</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Fish Butter Masala (B/L)',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Fish Curry (B/L)</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Fish Curry (B/L)',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Fish (B/L)</span>
+    <span>₹290 
+      <button class="add-btn" onclick="addToCart('Kadhai Fish (B/L)',290)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Prawns Butter Masala</span>
+    <span>₹310 
+      <button class="add-btn" onclick="addToCart('Prawns Butter Masala',310)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Prawns Curry</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Prawns Curry',300)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kadhai Prawns</span>
+    <span>₹300 
+      <button class="add-btn" onclick="addToCart('Kadhai Prawns',300)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= INDIAN BREADS ================= -->
+<div class="menu-category" id="indian-breads">
+  <h2>Indian Breads</h2>
+
+  <div class="item">
+    <span>Tandoori Roti</span>
+    <span>₹30
+      <button class="add-btn" onclick="addToCart('Tandoori Roti',30)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Butter Roti</span>
+    <span>₹35
+      <button class="add-btn" onclick="addToCart('Butter Roti',35)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Rumali Roti</span>
+    <span>₹40 
+      <button class="add-btn" onclick="addToCart('Rumali Roti',40)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Plain Naan</span>
+    <span>₹40
+      <button class="add-btn" onclick="addToCart('Plain Naan',40)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Butter Naan</span>
+    <span>₹45 
+      <button class="add-btn" onclick="addToCart('Butter Naan',45)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Garlic Butter Naan</span>
+    <span>₹60 
+      <button class="add-btn" onclick="addToCart('Garlic Butter Naan',60)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Masala Garlic Naan</span>
+    <span>₹65 
+      <button class="add-btn" onclick="addToCart('Masala Garlic Naan',65)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Aloo Paratha</span>
+    <span>₹55 
+      <button class="add-btn" onclick="addToCart('Aloo Paratha',55)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= SALAD & PAPAD ================= -->
+<div class="menu-category" id="salad-papad">
+  <h2>Salad & Papad</h2>
+
+  <div class="item">
+    <span>Green Salad</span>
+    <span>₹70
+      <button class="add-btn" onclick="addToCart('Green Salad',70)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Masala Papad</span>
+    <span>₹60 
+      <button class="add-btn" onclick="addToCart('Masala Papad',60)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Plain Papad</span>
+    <span>₹40 
+      <button class="add-btn" onclick="addToCart('Plain Papad',40)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mixed Raita</span>
+    <span>₹70 
+      <button class="add-btn" onclick="addToCart('Mixed Raita',70)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Plain Curd (L)</span>
+    <span>₹70 
+      <button class="add-btn" onclick="addToCart('Plain Curd (L)',70)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Plain Curd (S)</span>
+    <span>₹40 
+      <button class="add-btn" onclick="addToCart('Plain Curd (S)',40)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= VEG FRIED RICE ================= -->
+<div class="menu-category" id="veg-fried-rice">
+  <h2>Veg Fried Rice</h2>
+
+  <div class="item">
+    <span>Veg Fried Rice</span>
+    <span>₹150 
+      <button class="add-btn" onclick="addToCart('Veg Fried Rice',150)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Paneer Fried Rice</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Paneer Fried Rice',210)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Fried Rice</span>
+    <span>₹230 
+      <button class="add-btn" onclick="addToCart('Kaju Fried Rice',230)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Paneer Fried Rice</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Kaju Paneer Fried Rice',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Veg Manchurian Fried Rice</span>
+    <span>₹170 
+      <button class="add-btn" onclick="addToCart('Veg Manchurian Fried Rice',170)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Corn Fried Rice</span>
+    <span>₹190 
+      <button class="add-btn" onclick="addToCart('Corn Fried Rice',190)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Veg Schezwan Fried Rice</span>
+    <span>₹190 
+      <button class="add-btn" onclick="addToCart('Veg Schezwan Fried Rice',190)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mushroom Fried Rice</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Mushroom Fried Rice',210)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Tomato Rice</span>
+    <span>₹160 
+      <button class="add-btn" onclick="addToCart('Tomato Rice',160)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Jeera Rice</span>
+    <span>₹150 
+      <button class="add-btn" onclick="addToCart('Jeera Rice',150)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mixed Veg Fried Rice</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Mixed Veg Fried Rice',240)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Dal Khichdi</span>
+    <span>₹150 
+      <button class="add-btn" onclick="addToCart('Dal Khichdi',150)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Curd Rice</span>
+    <span>₹110 
+      <button class="add-btn" onclick="addToCart('Curd Rice',110)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Special Curd Rice</span>
+    <span>₹130 
+      <button class="add-btn" onclick="addToCart('Special Curd Rice',130)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>White Plain Rice</span>
+    <span>₹70 
+      <button class="add-btn" onclick="addToCart('White Plain Rice',70)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= NON-VEG FRIED RICE ================= -->
+<div class="menu-category" id="nonveg-fried-rice">
+  <h2>Non-Veg Fried Rice</h2>
+
+  <div class="item">
+    <span>Egg Fried Rice</span>
+    <span>₹160 
+      <button class="add-btn" onclick="addToCart('Egg Fried Rice',160)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Fried Rice</span>
+    <span>₹190 
+      <button class="add-btn" onclick="addToCart('Chicken Fried Rice',190)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Schezwan Chicken Fried Rice</span>
+    <span>₹230 
+      <button class="add-btn" onclick="addToCart('Schezwan Chicken Fried Rice',230)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Chicken Corn Fried Rice</span>
+    <span>₹210 
+      <button class="add-btn" onclick="addToCart('Chicken Corn Fried Rice',210)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Mixed Fried Rice</span>
+    <span>₹250 
+      <button class="add-btn" onclick="addToCart('Mixed Fried Rice',250)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Prawns Fried Rice</span>
+    <span>₹260 
+      <button class="add-btn" onclick="addToCart('Prawns Fried Rice',260)">Add</button>
+    </span>
+  </div>
+
+  <div class="item">
+    <span>Kaju Chicken Fried Rice</span>
+    <span>₹240 
+      <button class="add-btn" onclick="addToCart('Kaju Chicken Fried Rice',240)">Add</button>
+    </span>
+  </div>
+</div>
+<!-- ================= NON-VEG SOUPS ================= -->
+<div class="menu-category" id="nonveg-soups">
+  <h2>Non-Veg Soups</h2>
+</div>
+  <div class="item"><span>Chicken Corn Soup</span><span>₹120 <button class="add-btn" onclick="addToCart('Chicken Corn Soup',120)">Add</button></span></div>
+  <div class="item"><span>Chicken Hot & Sour Soup</span><span>₹120 <button class="add-btn" onclick="addToCart('Chicken Hot & Sour Soup',120)">Add</button></span></div>
+</div>
+
+<!-- ================= VEG BIRYANI ================= -->
+<div class="menu-category" id="veg-biryani">
+  <h2>Veg Biryani</h2>
+</div>
+
+  <div class="item"><span>Veg Biryani (Single)</span><span>₹150 <button class="add-btn" onclick="addToCart('Veg Biryani (Single)',150)">Add</button></span></div>
+  <div class="item"><span>Veg Biryani (Full)</span><span>₹270 <button class="add-btn" onclick="addToCart('Veg Biryani (Full)',270)">Add</button></span></div>
+  <div class="item"><span>Veg Biryani (Family)</span><span>₹500 <button class="add-btn" onclick="addToCart('Veg Biryani (Family)',500)">Add</button></span></div>
+
+  <div class="item"><span>Paneer Biryani (Single)</span><span>₹210 <button class="add-btn" onclick="addToCart('Paneer Biryani (Single)',210)">Add</button></span></div>
+  <div class="item"><span>Paneer Biryani (Full)</span><span>₹390 <button class="add-btn" onclick="addToCart('Paneer Biryani (Full)',390)">Add</button></span></div>
+  <div class="item"><span>Paneer Biryani (Family)</span><span>₹730 <button class="add-btn" onclick="addToCart('Paneer Biryani (Family)',730)">Add</button></span></div>
+
+  <div class="item"><span>Kaju Paneer Biryani (Single)</span><span>₹240 <button class="add-btn" onclick="addToCart('Kaju Paneer Biryani (Single)',240)">Add</button></span></div>
+  <div class="item"><span>Kaju Paneer Biryani (Full)</span><span>₹450 <button class="add-btn" onclick="addToCart('Kaju Paneer Biryani (Full)',450)">Add</button></span></div>
+  <div class="item"><span>Kaju Paneer Biryani (Family)</span><span>₹860 <button class="add-btn" onclick="addToCart('Kaju Paneer Biryani (Family)',860)">Add</button></span></div>
+
+  <div class="item"><span>Mushroom Biryani (Single)</span><span>₹210 <button class="add-btn" onclick="addToCart('Mushroom Biryani (Single)',210)">Add</button></span></div>
+  <div class="item"><span>Mushroom Biryani (Full)</span><span>₹390 <button class="add-btn" onclick="addToCart('Mushroom Biryani (Full)',390)">Add</button></span></div>
+  <div class="item"><span>Mushroom Biryani (Family)</span><span>₹730 <button class="add-btn" onclick="addToCart('Mushroom Biryani (Family)',730)">Add</button></span></div>
+
+  <div class="item"><span>Kaju Biryani (Single)</span><span>₹260 <button class="add-btn" onclick="addToCart('Kaju Biryani (Single)',260)">Add</button></span></div>
+  <div class="item"><span>Veg Pulav (Single)</span><span>₹160 <button class="add-btn" onclick="addToCart('Veg Pulav (Single)',160)">Add</button></span></div>
+  <div class="item"><span>Kaju Pulav (Single)</span><span>₹260 <button class="add-btn" onclick="addToCart('Kaju Pulav (Single)',260)">Add</button></span></div>
+  <div class="item"><span>Corn Kaju Pulav (Single)</span><span>₹260 <button class="add-btn" onclick="addToCart('Corn Kaju Pulav (Single)',260)">Add</button></span></div>
+  <div class="item"><span>Biryani Rice (Veg)</span><span>₹130 <button class="add-btn" onclick="addToCart('Biryani Rice (Veg)',130)">Add</button></span></div>
+</div>
+
+<!-- ================= NON-VEG BIRYANI ================= -->
+<div class="menu-category" id="nonveg-biryani">
+  <h2>Non-Veg Biryani</h2>
+</div>
+
+  <div class="item"><span>Chicken Dum Biryani (Single)</span><span>₹180 <button class="add-btn" onclick="addToCart('Chicken Dum Biryani (Single)',180)">Add</button></span></div>
+  <div class="item"><span>Chicken Dum Biryani (Full)</span><span>₹310 <button class="add-btn" onclick="addToCart('Chicken Dum Biryani (Full)',310)">Add</button></span></div>
+  <div class="item"><span>Chicken Dum Biryani (Family)</span><span>₹600 <button class="add-btn" onclick="addToCart('Chicken Dum Biryani (Family)',600)">Add</button></span></div>
+  <div class="item"><span>Chicken Dum Biryani (Jumbo)</span><span>₹900 <button class="add-btn" onclick="addToCart('Chicken Dum Biryani (Jumbo)',900)">Add</button></span></div>
+
+  <div class="item"><span>Chicken Fry Biryani (Single)</span><span>₹200 <button class="add-btn" onclick="addToCart('Chicken Fry Biryani (Single)',200)">Add</button></span></div>
+  <div class="item"><span>Chicken Fry Biryani (Full)</span><span>₹330 <button class="add-btn" onclick="addToCart('Chicken Fry Biryani (Full)',330)">Add</button></span></div>
+  <div class="item"><span>Chicken Fry Biryani (Family)</span><span>₹650 <button class="add-btn" onclick="addToCart('Chicken Fry Biryani (Family)',650)">Add</button></span></div>
+  <div class="item"><span>Chicken Fry Biryani (Jumbo)</span><span>₹960 <button class="add-btn" onclick="addToCart('Chicken Fry Biryani (Jumbo)',960)">Add</button></span></div>
+
+  <div class="item"><span>Natukodi Biryani (Single)</span><span>₹260 <button class="add-btn" onclick="addToCart('Natukodi Biryani (Single)',260)">Add</button></span></div>
+  <div class="item"><span>Natukodi Biryani (Full)</span><span>₹390 <button class="add-btn" onclick="addToCart('Natukodi Biryani (Full)',390)">Add</button></span></div>
+  <div class="item"><span>Natukodi Biryani (Family)</span><span>₹460 <button class="add-btn" onclick="addToCart('Natukodi Biryani (Family)',460)">Add</button></span></div>
+
+  <div class="item"><span>Mutton Fry Biryani (Single)</span><span>₹230 <button class="add-btn" onclick="addToCart('Mutton Fry Biryani (Single)',230)">Add</button></span></div>
+  <div class="item"><span>Mutton Fry Biryani (Full)</span><span>₹440 <button class="add-btn" onclick="addToCart('Mutton Fry Biryani (Full)',440)">Add</button></span></div>
+  <div class="item"><span>Mutton Fry Biryani (Family)</span><span>₹800 <button class="add-btn" onclick="addToCart('Mutton Fry Biryani (Family)',800)">Add</button></span></div>
+  <div class="item"><span>Mutton Fry Biryani (Jumbo)</span><span>₹1170 <button class="add-btn" onclick="addToCart('Mutton Fry Biryani (Jumbo)',1170)">Add</button></span></div>
+
+  <div class="item"><span>Mixed Biryani (Single)</span><span>₹260 <button class="add-btn" onclick="addToCart('Mixed Biryani (Single)',260)">Add</button></span></div>
+  <div class="item"><span>Boneless Biryani (Single)</span><span>₹210 <button class="add-btn" onclick="addToCart('Boneless Biryani (Single)',210)">Add</button></span></div>
+
+  <div class="item"><span>Kunda Biryani (Single)</span><span>₹210 <button class="add-btn" onclick="addToCart('Kunda Biryani (Single)',210)">Add</button></span></div>
+  <div class="item"><span>Kunda Biryani (Full)</span><span>₹390 <button class="add-btn" onclick="addToCart('Kunda Biryani (Full)',390)">Add</button></span></div>
+
+  <div class="item"><span>Tangdi Biryani (2 pcs)</span><span>₹390 <button class="add-btn" onclick="addToCart('Tangdi Biryani (2 pcs)',390)">Add</button></span></div>
+  <div class="item"><span>Chicken Tikka Biryani (Special)</span><span>₹360 <button class="add-btn" onclick="addToCart('Chicken Tikka Biryani (Special)',360)">Add</button></span></div>
+
+  <div class="item"><span>Fish Biryani (Single)</span><span>₹230 <button class="add-btn" onclick="addToCart('Fish Biryani (Single)',230)">Add</button></span></div>
+  <div class="item"><span>Fish Biryani (Full)</span><span>₹410 <button class="add-btn" onclick="addToCart('Fish Biryani (Full)',410)">Add</button></span></div>
+  <div class="item"><span>Fish Biryani (Family)</span><span>₹790 <button class="add-btn" onclick="addToCart('Fish Biryani (Family)',790)">Add</button></span></div>
+
+  <div class="item"><span>Prawns Biryani (Single)</span><span>₹260 <button class="add-btn" onclick="addToCart('Prawns Biryani (Single)',260)">Add</button></span></div>
+  <div class="item"><span>Prawns Biryani (Full)</span><span>₹460 <button class="add-btn" onclick="addToCart('Prawns Biryani (Full)',460)">Add</button></span></div>
+  <div class="item"><span>Prawns Biryani (Family)</span><span>₹860 <button class="add-btn" onclick="addToCart('Prawns Biryani (Family)',860)">Add</button></span></div>
+
+  <div class="item"><span>Egg Biryani (Single)</span><span>₹150 <button class="add-btn" onclick="addToCart('Egg Biryani (Single)',150)">Add</button></span></div>
+  <div class="item"><span>Egg Biryani (Full)</span><span>₹260 <button class="add-btn" onclick="addToCart('Egg Biryani (Full)',260)">Add</button></span></div>
+  <div class="item"><span>Egg Biryani (Family)</span><span>₹490 <button class="add-btn" onclick="addToCart('Egg Biryani (Family)',490)">Add</button></span></div>
+
+  <div class="item"><span>Biryani Rice (Non-Veg)</span><span>₹130 <button class="add-btn" onclick="addToCart('Biryani Rice (Non-Veg)',130)">Add</button></span></div>
+<!-- ================= MANDI ================= -->
+<div class="menu-category" id="mandi">
+  <h2>Mandi</h2>
+
+  <!-- Chicken Mandi -->
+  <div class="item"><span>Chicken Mandi (1 Piece)</span><span>₹290 <button class="add-btn" onclick="addToCart('Chicken Mandi (1 Piece)',290)">Add</button></span></div>
+  <div class="item"><span>Chicken Mandi (2 Piece)</span><span>₹460 <button class="add-btn" onclick="addToCart('Chicken Mandi (2 Piece)',460)">Add</button></span></div>
+  <div class="item"><span>Chicken Mandi (3 Piece)</span><span>₹740 <button class="add-btn" onclick="addToCart('Chicken Mandi (3 Piece)',740)">Add</button></span></div>
+
+  <!-- Fish Mandi -->
+  <div class="item"><span>Fish Mandi (1 Piece)</span><span>₹310 <button class="add-btn" onclick="addToCart('Fish Mandi (1 Piece)',310)">Add</button></span></div>
+  <div class="item"><span>Fish Mandi (2 Piece)</span><span>₹540 <button class="add-btn" onclick="addToCart('Fish Mandi (2 Piece)',540)">Add</button></span></div>
+  <div class="item"><span>Fish Mandi (3 Piece)</span><span>₹820 <button class="add-btn" onclick="addToCart('Fish Mandi (3 Piece)',820)">Add</button></span></div>
+
+  <!-- Mutton Fry Mandi -->
+  <div class="item"><span>Mutton Fry Mandi (Single)</span><span>₹310 <button class="add-btn" onclick="addToCart('Mutton Fry Mandi (Single)',310)">Add</button></span></div>
+  <div class="item"><span>Mutton Fry Mandi (Full)</span><span>₹560 <button class="add-btn" onclick="addToCart('Mutton Fry Mandi (Full)',560)">Add</button></span></div>
+
+  <!-- Chicken Juicy Mandi -->
+  <div class="item"><span>Chicken Juicy Mandi (1 Piece)</span><span>₹300 <button class="add-btn" onclick="addToCart('Chicken Juicy Mandi (1 Piece)',300)">Add</button> </span> </div>
+  <div class="item"><span>Chicken Juicy Mandi (2 Piece)</span><span>₹480 <button class="add-btn" onclick="addToCart('Chicken Juicy Mandi (2 Piece)',480)">Add</button></span></div>
+  <div class="item"><span>Chicken Juicy Mandi (3 Piece)</span><span>₹760 <button class="add-btn" onclick="addToCart('Chicken Juicy Mandi (3 Piece)',760)">Add</button></span></div>
+
+  <!-- Extras -->
+  <div class="item"><span>Extra Chicken Mandi Piece</span><span>₹140 <button class="add-btn" onclick="addToCart('Extra Chicken Mandi Piece',140)">Add</button></span></div>
+  <div class="item"><span>Extra Fish Mandi Piece</span><span>₹160 <button class="add-btn" onclick="addToCart('Extra Fish Mandi Piece',160)">Add</button></span></div>
+  <div class="item"><span>Extra Juicy Chicken Mandi Piece</span><span>₹160 <button class="add-btn" onclick="addToCart('Extra Juicy Chicken Mandi Piece',160)">Add</button></span></div>
+
+  <div class="item"><span>Extra Mandi Rice (Plate)</span><span>₹160 <button class="add-btn" onclick="addToCart('Extra Mandi Rice (Plate)',160)">Add</button></span></div>
+  <div class="item"><span>Extra Mandi Rice</span><span>₹130 <button class="add-btn" onclick="addToCart('Extra Mandi Rice',130)">Add</button></span></div>
+  <div class="item"><span>Extra Mandi Soup</span><span>₹40 <button class="add-btn" onclick="addToCart('Extra Mandi Soup',40)">Add</button></span></div>
+  <div class="item"><span>Extra Mayonnaise</span><span>₹40 <button class="add-btn" onclick="addToCart('Extra Mayonnaise',40)">Add</button></span></div>
+  <div class="item"><span>Extra Raita</span><span>₹20 <button class="add-btn" onclick="addToCart('Extra Raita',20)">Add</button></span></div>
+  <div class="item"><span>Onion Salad</span><span>₹30 <button class="add-btn" onclick="addToCart('Onion Salad',30)">Add</button></span></div>
+
+  <!-- Shawarma -->
+  <div class="item"><span>Shawarma</span><span>₹110 <button class="add-btn" onclick="addToCart('Shawarma',110)">Add</button></span></div>
+  <div class="item"><span>Special Shawarma</span><span>₹130 <button class="add-btn" onclick="addToCart('Special Shawarma',130)">Add</button></span></div>
+</div>
+</div>
+</section>
+<nav class="bottom-nav">
+  <a href="index.html" >
+    <i class="fas fa-home"></i>
+    <span>Home</span>
+  </a>
+
+  <a href="about.html" >
+    <i class="fas fa-info-circle"></i>
+    <span>About</span>
+  </a>
+
+  <a href="menu.html" class="active">
+    <i class="fas fa-utensils"></i>
+    <span>Menu</span>
+  </a>
+
+  <a href="game.html">
+    <i class="fas fa-gamepad"></i>
+    <span>Game</span>
+  </a>
+
+  <a href="contact.html">
+    <i class="fas fa-phone"></i>
+    <span>Contact</span>
+  </a>
+</nav>
+<script>
+/* ================= SEARCH ================= */
+function searchMenu(){
+  const q = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".item").forEach(item=>{
+    item.style.display = item.innerText.toLowerCase().includes(q)
+      ? "flex"
+      : "none";
+  });
+}
+
+/* ================= CART ================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(name, price){
+  const found = cart.find(i => i.name === name);
+
+  if(found){
+    found.qty++;
+  }else{
+    cart.push({ name, price, qty:1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+  showToastTop(` ${name} added to cart`);
+}
+
+function updateCartCount(){
+  let count = 0;
+  cart.forEach(i => count += i.qty);
+  const badge = document.getElementById("cartCount");
+  if(badge) badge.innerText = count;
+}
+
+/* ================= AUDIO UNLOCK ================= */
+let audioUnlocked = false;
+
+document.addEventListener("click", unlockAudio, { once:true });
+document.addEventListener("touchstart", unlockAudio, { once:true });
+
+function unlockAudio(){
+  const sound = document.getElementById("toastSound");
+  if(!sound) return;
+
+  sound.play().then(()=>{
+    sound.pause();
+    sound.currentTime = 0;
+    audioUnlocked = true;
+  }).catch(()=>{});
+}
+
+/* ================= TOP TOAST + SOUND ================= */
+function showToastTop(text){
+  const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toastText");
+  const sound = document.getElementById("toastSound");
+
+  if(!toast || !toastText) return;
+
+  toastText.innerText = text;
+
+  if(sound && audioUnlocked){
+    sound.currentTime = 0;
+    sound.play().catch(()=>{});
+  }
+
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },2500);
+}
+
+/* ================= SECTION SCROLL ================= */
+function goTo(id){
+  const el = document.getElementById(id);
+  if(el){
+    el.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+  }
+}
+
+/* INIT */
+updateCartCount();
+</script>
+</body>
+</html>

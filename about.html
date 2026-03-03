@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About sandarshini</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+body{
+  background:#0f0f0f;
+  color:#fff;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.9);
+  z-index:1000;
+}
+.logo{
+  color:#c1121f;
+  font-size:26px;
+  font-weight:700;
+}
+.nav-links{
+  display:flex;
+}
+.nav-links a{
+  color:#fff;
+  margin-left:25px;
+  text-decoration:none;
+}
+.nav-links a:hover{
+  color:#c1121f;
+}
+.toggle{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* ===== ABOUT ===== */
+.about{
+  padding:120px 40px 80px;
+  max-width:1100px;
+  margin:auto;
+}
+.about h1{
+  text-align:center;
+  color:#c1121f;
+  font-size:40px;
+  margin-bottom:30px;
+}
+
+/* ===== OWNER TOP ===== */
+.owner-top{
+  background:#1a1a1a;
+  border-radius:22px;
+  padding:35px;
+  text-align:center;
+  margin-bottom:50px;
+}
+.owner-img{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  border:4px solid #c1121f;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+.owner-top h3{
+  color:#c1121f;
+  margin-bottom:5px;
+}
+.owner-top span{
+  font-size:14px;
+  opacity:.8;
+}
+.owner-top p{
+  max-width:700px;
+  margin:15px auto 0;
+  font-size:14px;
+  line-height:1.7;
+  opacity:.9;
+}
+
+/* ===== CONTENT ===== */
+.about-content{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:start;
+}
+.about-text p{
+  margin-bottom:18px;
+  line-height:1.7;
+  opacity:.9;
+}
+.about-text strong{
+  color:#c1121f;
+}
+
+/* ===== WHY BOX ===== */
+.about-box{
+  background:#1a1a1a;
+  padding:25px;
+  border-radius:18px;
+}
+.about-box h3{
+  color:#c1121f;
+  margin-bottom:15px;
+}
+.about-box ul{
+  list-style:none;
+}
+.about-box li{
+  margin-bottom:12px;
+}
+.about-box i{
+  color:#c1121f;
+  margin-right:10px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#000;
+  padding:15px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .toggle{
+    display:block;
+  }
+  .nav-links{
+    position:absolute;
+    top:65px;
+    right:0;
+    width:100%;
+    background:#000;
+    flex-direction:column;
+    display:none;
+  }
+  .nav-links a{
+    padding:15px;
+    border-top:1px solid #222;
+    margin:0;
+  }
+  .nav-links.show{
+    display:flex;
+  }
+  .about-content{
+    grid-template-columns:1fr;
+  }
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:65px;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #222;
+  z-index:9999;
+}
+.bottom-nav a{
+  color:#aaa;
+  text-decoration:none;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.bottom-nav i{
+  font-size:20px;
+  margin-bottom:4px;
+}
+.bottom-nav a.active,
+.bottom-nav a:hover{
+  color:#c1121f;
+}
+@media(min-width:900px){
+  .bottom-nav{
+    display:none;
+  }
+}
+.back-btn{
+  color:#fff;
+  font-size:20px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.back-btn:hover{
+  color:#c1121f;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+  <div class="logo">NEW SANDARSHINI</div>
+  <div class="toggle" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="about">
+  <h1>About Us</h1>
+
+  <!-- OWNER ON TOP -->
+  <div class="owner-top">
+    <img src="owner.jpg" class="owner-img" alt="Owner">
+    <h3>G.Baskar Reddy</h3>
+    <span>Founder & Owner</span>
+    <p>
+      With a strong vision to serve authentic taste and quality food,
+      he founded New Sandarshini to blend tradition, hospitality, and excellence.
+    </p>
+  </div>
+
+  <div class="about-content">
+    <div class="about-text">
+      <p>
+        <strong>New Sandarshini</strong> is where tradition meets taste.
+        Every dish is crafted with passion and authenticity.
+      </p>
+      <p>
+        We use premium ingredients and maintain the highest hygiene standards
+        to ensure customer satisfaction.
+      </p>
+      <p>
+        A warm ambience, royal dining feel, and unforgettable flavors await you.
+      </p>
+    </div>
+
+    <div class="about-box">
+      <h3>Why Choose Sandarshini?</h3>
+      <ul>
+        <li><i class="fas fa-check-circle"></i> Authentic Indian Flavors</li>
+        <li><i class="fas fa-check-circle"></i> Premium Ingredients</li>
+        <li><i class="fas fa-check-circle"></i> Hygienic Kitchen</li>
+        <li><i class="fas fa-check-circle"></i> Family Friendly</li>
+        <li><i class="fas fa-check-circle"></i> Quick Service</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<nav class="bottom-nav">
+  <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="about.html" class="active"><i class="fas fa-info-circle"></i><span>About</span></a>
+  <a href="menu.html"><i class="fas fa-utensils"></i><span>Menu</span></a>
+  <a href="game.html"><i class="fas fa-gamepad"></i><span>Game</span></a>
+  <a href="contact.html"><i class="fas fa-phone"></i><span>Contact</span></a>
+</nav>
+
+<footer>
+  © 2025 New Sandarshini Restaurant | All Rights Reserved
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
