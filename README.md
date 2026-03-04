@@ -1,6 +1,6 @@
-🍽️ Sandshirini Restaurant Website
+🍽️ New Sandarshini Restaurant Website
 
-A responsive and visually appealing restaurant website developed for Sandshirini Restaurant. This project showcases the restaurant’s menu, services, and contact details with an attractive user interface and smooth user experience.
+A responsive and visually appealing restaurant website developed for New Sandarhini Family Restaurant. This project showcases the restaurant’s menu, services, and contact details with an attractive user interface and smooth user experience.
 
 🌟 Features
 
@@ -27,7 +27,7 @@ JavaScript
 Google Fonts
 
 📂 Project Structure
-Sandshirini-Restaurant/
+New Sandshirini Family Restaurant/
 │
 ├── index.html        (Home Page)
 ├── menu.html         (Food Menu Page)
