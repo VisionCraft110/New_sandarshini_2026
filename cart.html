@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>New Sandarshini | Cart</title>
+<title>Sandarshini | Cart</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -254,7 +254,7 @@ header{
   <div style="display:flex;align-items:center;gap:12px;flex:1;">
 
     <!-- Back Button -->
-    <a href="menu.html" class="back-btn">
+    <a href="index.html" class="back-btn">
       <i class="fas fa-arrow-left"></i>
     </a>
 
@@ -288,7 +288,28 @@ header{
     Order on WhatsApp
   </button>
 
+  <div style="text-align:center;margin:15px 0;color:#aaa;">
+  OR Select Payment
+</div>
+
+<div style="display:flex;gap:10px;">
   
+<button class="whatsapp-btn" style="background:#5f259f"
+onclick="payWithApp('phonepe')">
+PhonePe
+</button>
+
+<button class="whatsapp-btn" style="background:#4285F4"
+onclick="payWithApp('gpay')">
+Google Pay
+</button>
+
+<button class="whatsapp-btn" style="background:#00baf2"
+onclick="payWithApp('paytm')">
+Paytm
+</button>
+
+</div>
 
 </div>
 
@@ -325,6 +346,45 @@ header{
 
 
 <script>
+function payWithApp(app){
+
+  if(total<=0){
+    alert("Cart is empty");
+    return;
+  }
+
+  let upiId="gudurukamal@ybl";
+  let name="New Sandarshini Restaurant";
+
+  let url="";
+
+  if(app==="phonepe"){
+    url="phonepe://pay?pa="+upiId+
+    "&pn="+encodeURIComponent(name)+
+    "&am="+total+"&cu=INR";
+  }
+
+  if(app==="gpay"){
+    url="tez://upi/pay?pa="+upiId+
+    "&pn="+encodeURIComponent(name)+
+    "&am="+total+"&cu=INR";
+  }
+
+  if(app==="paytm"){
+    url="paytmmp://pay?pa="+upiId+
+    "&pn="+encodeURIComponent(name)+
+    "&am="+total+"&cu=INR";
+  }
+
+  window.location.href=url;
+
+  setTimeout(()=>{
+    alert("✅ Payment successful! Send screenshot on WhatsApp.");
+    paymentDone=true;
+    sessionStorage.setItem("paymentDone","true");
+    handleUI();
+  },4000);
+}
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let total = 0;
 let orderType = "Takeaway";
@@ -464,16 +524,25 @@ function orderOnWhatsApp(){
   });
 
   msg+=`\nTotal Paid: ₹${total}`;
+  msg+=`\n\n📸 Payment Screenshot attached below ⬇️`;
 
   window.open(
     "https://wa.me/919573299396?text="+encodeURIComponent(msg),
     "_blank"
   );
 
-  setTimeout(()=>{
-    clearCart();
-    alert("✅ Order placed successfully!");
-  },800);
+  // setTimeout(()=>{
+  //   clearCart();
+  //   alert("✅ Order placed successfully!");
+  // },800);
+  // IMPORTANT MESSAGE
+  alert(
+    "📲 Complete payment in UPI app.\n\n" +
+    "After successful payment:\n" +
+    "➡ Take screenshot\n" +
+    "➡ Click 'Order on WhatsApp'\n\n" +
+    "❌ Do NOT click back without payment"
+  );
 }
 
 const cartItems=document.getElementById("cartItems");
